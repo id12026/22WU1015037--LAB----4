@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>REGISTRATION FORM</title>
+</head>
+
+	<body>
+        <div class="my class">
+        <form action="" id="form">
+            <h1>REGISTRATION FORM<b></b><hr></h1><br>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter username">
+                            <div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                            <div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="number" class="form-control" id="phone" placeholder="Enter phone">
+                            <div></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter password">
+                            <div></div>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="repassword">Re-Password</label>
+                            <input type="password" class="form-control" id="repassword" placeholder="Enter password again">
+                            <div></div>
+                        </div>
+			
+						<div class="form-group"> 
+							<label for="gender">Gender:</label><br>
+							<input type="radio" id="male" name="gender" value="male" required>
+							<label for="male">Male</label>
+							<input type="radio" id="female" name="gender" value="female" required>
+							<label for="female">Female</label><br>
+                            <input type="radio" id="others" name="gender" value="others" required>
+							<label for="others">Others</label><br>
+							<br>
+							</div>
+						<div class="form-group">
+							<label for="dob">DOB:</label><br>
+							<br>
+							<input type="date" id="dob" name="dob"><br>
+							<br>
+							</div>
+						 <div class="form-group">
+							<label for="nationality">Nationality:</label><br>
+							<select id="nationality" name="nationality">
+							  <br>
+							  <option value="indian">Indian</option>
+							  <option value="others">Others</option>
+							</select><br>
+							<br>
+							</div>
+						<div class="form-group">
+							<label for="address">Address:</label><br>
+							<textarea id="address" name="address"></textarea><br>
+							<br>
+							</div>
+						
+						<div class="form-group">
+							<label for="course">Course:</label><br>
+							<input type="text" id="course" name="course"><br>
+							<br>
+							</div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const form = document.getElementById('form');
+const username = document.getElementById('username');
+const email = document.getElementById('email');
+const password = document.getElementById('password');
+const repassword = document.getElementById('repassword');
+const gender = document.getElementById('gender');
+
+function error(input, message) {
+    input.className = 'form-control is-invalid';
+    const div = input.nextElementSibling;
+    div.innerText = message;
+    div.className = 'invalid-feedback';
+}
+
+function success(input) {
+    input.className = 'form-control is-valid';
+}
+
+function checkEmail(input) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+   
+    if(re.test(input.value)) {
+        success(input);
+    } else {
+        error(input, 'Invalid email address');
+    }
+}
+
+function checkRequired(inputs) {
+    inputs.forEach(function(input) {
+        if(input.value === '') {
+            error(input, `${input.id} is required.`);
+        } else {
+            success(input);
+        }
+    });  
+}
+
+function checkLength(input, min, max) {
+    if (input.value.length < min) {
+        error(input, `${input.id} must be at least ${min} characters`);
+    }else if (input.value.length > max) {
+        error(input, `${input.id} must be a maximum of ${max} characters`);
+    }else {
+        success(input);
+    }
+     
+}
+
+function checkPasswords(input1,input2) {
+    if(input1.value !== input2.value) {
+        error(input2, 'Passwords not match');
+    }
+}
+
+function checkPhone(input) {
+    var exp = /^\d{10}$/;   
+    if(!exp.test(input.value)) 
+        error(input, "Phone field must be 10 characters.");
+}
+
+function checkPasswords(input1,input2) {
+    if(input1.value !== input2.value) {
+        error(input2, 'Passwords not match');
+    }
+}
+
+
+
+
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    checkRequired([username,email,password,repassword,phone]);
+    checkEmail(email);
+    checkLength(username,4,10);
+    checkLength(password,7,12);
+    checkPasswords(password,repassword);
+    checkPhone(phone);
+});
+
+form.addEventListener('submit', (e) => {
+  const maleRadio = document.querySelector('input[name="gender"][value="male"]');
+  const femaleRadio = document.querySelector('input[name="gender"][value="female"]');
+
+  if (!maleRadio.checked && !femaleRadio.checked) {
+    e.preventDefault();
+    alert('Please select a gender.');
+  }
+});
+
+
+
+form.addEventListener('submit', (e) => {
+  const dobInput = document.querySelector('#dob');
+
+  const date = new Date(dobInput.value);
+  const now = new Date();
+
+  if (isNaN(date.getTime()) || date > now || now.getFullYear() - date.getFullYear() > 120) {
+    e.preventDefault();
+    alert('Please enter a valid date of birth.');
+  }
+});
+
+
+form.addEventListener('submit', (e) => {
+  const nationalityInput = document.querySelector('#nationality');
+
+  if (nationalityInput.value.trim() === '') {
+    e.preventDefault();
+    alert('Please enter your nationality.');
+  }
+});
+
+
+form.addEventListener('submit', (e) => {
+  const addressInput = document.querySelector('#address');
+  const courseInput = document.querySelector('#course');
+
+  if (addressInput.value.trim() === '') {
+    e.preventDefault();
+    alert('Please enter your address.');
+  }
+
+  if (courseInput.value.trim() === '') {
+    e.preventDefault();
+    alert('Please enter your course.');
+  }
+});
+
+</script>
+
+</body>
+</html>
